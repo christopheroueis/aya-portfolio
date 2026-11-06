@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aya Abdel Nour Portfolio</title>
+<meta name="description" content="Aya Abdel Nour, selected works 2023-26.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: the printed A3 portfolio, re-set for the screen. White paper, the portfolio's
+   oxblood red, condensed caps read sideways along the sheet edge, and one accent per project.
+   Drawings stay the protagonists: they pan, stack and open full size. */
+:root{
+  --paper:#ffffff;
+  --ink:#000000;
+  --text:#262626;
+  --mute:#7b7b7b;
+  --band:#d2d2d2;
+  --hair:#e4e4e4;
+  --red:#830000;
+  --p1:#00239f; --p2:#830000; --p3:#c2b8ad; --p3-ink:#846757; --p4:#8e95a4; --p4-ink:#646c7c;
+  --display:"Barlow Condensed","Arial Narrow","Helvetica Neue",sans-serif;
+  --body:"Source Sans 3","Myriad Pro","Segoe UI",Helvetica,Arial,sans-serif;
+  --top:64px;
+  --gut:clamp(16px,3.2vw,48px);
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--text);font:400 17px/1.55 var(--body);overflow-x:hidden}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+h1,h2,h3{margin:0;font-weight:inherit;text-wrap:balance}
+p{margin:0}
+
+/* ---------- header ---------- */
+.top{position:fixed;inset:0 0 auto;height:var(--top);z-index:40;display:flex;align-items:center;justify-content:space-between;padding:0 var(--gut);background:rgba(255,255,255,.94);backdrop-filter:blur(6px);border-bottom:1px solid transparent;transition:border-color .3s}
+.top.scrolled{border-bottom-color:var(--hair)}
+.brand{font:700 21px/1 var(--display);letter-spacing:.02em;color:var(--red);text-decoration:none}
+.top nav{display:flex;gap:clamp(14px,2.4vw,32px)}
+.top nav a{text-decoration:none;font-size:15px;color:var(--ink);padding:6px 0;background:linear-gradient(var(--red),var(--red)) 0 100%/0 1px no-repeat;transition:background-size .3s}
+.top nav a:hover{background-size:100% 1px}
+
+/* ---------- project rail ---------- */
+.rail{position:fixed;right:clamp(10px,1.6vw,22px);top:50%;transform:translateY(-50%);z-index:30;display:flex;flex-direction:column;gap:12px;opacity:0;pointer-events:none;transition:opacity .35s}
+.rail.on{opacity:1;pointer-events:auto}
+.rail a{font:600 15px/1 var(--display);color:var(--band);text-decoration:none;letter-spacing:.04em;transition:color .3s}
+.rail a[aria-current="true"]{color:var(--c)}
+
+/* ---------- cover (the printed cover, rebuilt) ---------- */
+.cover{padding-top:var(--top);display:grid;place-items:center;min-height:min(100svh,980px)}
+.sheet-a3{container-type:inline-size;position:relative;width:min(100vw,calc((100svh - var(--top)) * 1.414));aspect-ratio:1.414/1;overflow:hidden}
+.ln{position:absolute;display:block;background:var(--red)}
+.ln.h-grey{left:44%;right:0;top:56.4%;height:3px;background:var(--band);transform-origin:left}
+.ln.h-red{left:0;width:44.5%;top:57%;height:1.5px;transform-origin:right}
+.ln.v-long{left:58.6%;width:clamp(5px,.75vw,9px);top:51%;bottom:0;transform-origin:top}
+.ln.v-top{left:85.6%;width:clamp(5px,.75vw,9px);top:0;height:46%;transform-origin:top}
+.cover-name{position:absolute;left:26.5%;top:52.6%;font:700 clamp(12px,1.9vw,26px)/1 var(--display);color:var(--red);letter-spacing:.01em}
+.cover-title{position:absolute;left:57.5%;top:44.5%;font:700 clamp(40px,10.4vw,150px)/.8 var(--display);color:var(--red);letter-spacing:-.005em;display:flex;will-change:transform}
+.cover-title span{display:inline-block;overflow:hidden}
+.cover-title i{display:inline-block;font-style:normal}
+.cover-sub{position:absolute;left:58.6%;top:62%;padding-left:clamp(14px,1.6vw,24px);font-size:clamp(12px,1.2vw,16px);color:var(--mute);letter-spacing:.02em}
+@media (prefers-reduced-motion:no-preference){
+  .ln{animation:draw 1.1s cubic-bezier(.65,0,.2,1) both}
+  .ln.h-grey,.ln.h-red{animation-name:drawx}
+  .ln.v-top{animation-delay:.15s}.ln.v-long{animation-delay:.3s}.ln.h-red{animation-delay:.45s}.ln.h-grey{animation-delay:.5s}
+  .cover-title i{animation:rise .9s cubic-bezier(.2,.7,.1,1) both;animation-delay:calc(.55s + var(--i) * 45ms)}
+  .cover-name,.cover-sub{animation:fade .8s ease both 1.2s}
+}
+@keyframes draw{from{transform:scaleY(0)}}
+@keyframes drawx{from{transform:scaleX(0)}}
+@keyframes rise{from{transform:translateY(105%)}}
+@keyframes fade{from{opacity:0}}
+
+/* ---------- section scaffolding ---------- */
+.wrap{padding:0 var(--gut)}
+.band-title{font:700 clamp(46px,5.6vw,84px)/.82 var(--display);color:var(--red);writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap}
+
+/* ---------- about ---------- */
+.about{display:grid;grid-template-columns:clamp(54px,6vw,92px) minmax(230px,.9fr) minmax(0,1.15fr) minmax(0,1.15fr);column-gap:clamp(20px,3vw,48px);padding:clamp(60px,9vw,120px) var(--gut) 40px 0;scroll-margin-top:var(--top)}
+.about-band{background:var(--band);grid-row:span 2;position:relative}
+.about-band .band-title{position:sticky;top:calc(var(--top) + 24px);margin-left:auto;transform:rotate(180deg) translateX(-38%)}
+.who img{width:100%;max-width:340px;background:#fff}
+.who h2{font:700 clamp(30px,3.2vw,46px)/1 var(--display);color:var(--red);margin-top:20px}
+.who .tag{font-style:italic;margin-top:10px;max-width:34ch;color:var(--text)}
+.who .tag::after{content:"";display:block;width:56%;height:2px;background:var(--band);margin:14px 0 0 auto}
+.cv-col{display:grid;align-content:start;gap:clamp(36px,4vw,56px)}
+.cv h3{font:600 clamp(26px,2.4vw,34px)/1 var(--display);color:var(--red);margin-bottom:18px;letter-spacing:.01em}
+.cv ul{list-style:none;margin:0;padding:0 0 0 16px;border-left:2px solid var(--band);display:grid;gap:22px}
+.ent b{display:block;font-weight:600;font-size:17px;line-height:1.25;color:var(--ink);text-transform:uppercase;letter-spacing:.01em}
+.ent b small{font-size:14px;font-weight:400;text-transform:none;color:var(--text);letter-spacing:0}
+.ent time,.ent .when{display:block;font-size:12.5px;color:#a3a3a3;margin:3px 0 4px}
+.ent p{font-size:15.5px;line-height:1.5}
+.ent .bul{margin:6px 0 0;padding:0 0 0 14px;font-size:15.5px;line-height:1.5}
+.ent .bul li{margin:3px 0}
+.cv-low{grid-column:2 / -1;display:grid;grid-template-columns:repeat(5,minmax(0,auto));justify-content:space-between;gap:28px 36px;margin-top:clamp(56px,6vw,90px)}
+.cv-low ul{gap:2px;font-size:15.5px}
+.cv-low li span{color:var(--mute)}
+.cert li{margin-bottom:6px}
+.cert b{font-weight:400;font-size:20px;color:var(--ink)}
+.pi li{display:grid;grid-template-columns:86px 1fr;gap:10px}
+.pi a{text-decoration:none;border-bottom:1px solid var(--band)}
+
+/* ---------- contents strips ---------- */
+.contents{display:grid;grid-template-columns:clamp(54px,6vw,92px) 1fr;column-gap:clamp(20px,3vw,48px);padding:clamp(70px,9vw,130px) var(--gut) clamp(60px,8vw,110px) 0;scroll-margin-top:var(--top)}
+.contents .band-title{align-self:end;justify-self:end;margin-right:-4px}
+.contents-band{background:var(--band);display:grid;align-items:end;justify-items:end;padding-bottom:0}
+.strips{display:flex;gap:clamp(8px,1.2vw,18px);height:min(72svh,640px)}
+.strip{position:relative;flex:1 1 0;min-width:0;overflow:hidden;text-decoration:none;color:#fff;transition:flex-grow .7s cubic-bezier(.3,.7,.1,1)}
+.strip::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.26),rgba(0,0,0,0) 26%,rgba(0,0,0,0) 78%,rgba(0,0,0,.3));pointer-events:none}
+.strip .n,.strip .cat,.strip .nm{z-index:1}
+.strip img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.1s cubic-bezier(.3,.7,.1,1)}
+.strip .n{position:absolute;left:10px;top:4px;font:700 clamp(54px,7vw,104px)/1 var(--display);color:#fff;letter-spacing:-.01em;text-shadow:0 1px 18px rgba(0,0,0,.08)}
+.strip .cat{position:absolute;left:10px;bottom:8px;font:600 clamp(13px,1.1vw,16px)/1 var(--display);letter-spacing:.04em;color:#fff;text-shadow:0 0 12px rgba(0,0,0,.35)}
+.strip .nm{position:absolute;left:10px;right:10px;bottom:34px;font:700 clamp(22px,2.2vw,32px)/1 var(--display);opacity:0;transform:translateY(10px);transition:opacity .4s,transform .5s;text-shadow:0 0 16px rgba(0,0,0,.35)}
+.strips:hover .strip,.strips:focus-within .strip{flex-grow:.8}
+.strips .strip:hover,.strips .strip:focus-visible{flex-grow:2.6}
+.strip:hover img,.strip:focus-visible img{transform:scale(1.04)}
+.strip:hover .nm,.strip:focus-visible .nm{opacity:1;transform:none}
+
+/* ---------- project opener ---------- */
+.project{--c:var(--p1);--ci:var(--c);scroll-margin-top:var(--top);position:relative}
+.opener{display:grid;grid-template-columns:clamp(84px,10vw,150px) minmax(250px,330px) minmax(0,1fr);column-gap:clamp(20px,3vw,48px);padding:clamp(80px,10vw,150px) var(--gut) clamp(40px,6vw,90px);align-items:stretch}
+.op-side{position:relative}
+.op-side-in{position:sticky;top:calc(var(--top) + 20px);display:flex;flex-direction:column;justify-content:space-between;gap:28px;height:calc(100svh - var(--top) - 60px);max-height:820px}
+.op-num{font:700 clamp(72px,9vw,140px)/.8 var(--display);color:var(--c);letter-spacing:-.02em}
+.op-title{font:700 clamp(40px,4.6vw,70px)/.85 var(--display);color:var(--c);writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;align-self:flex-start}
+.op-title small{font:500 .36em/1 var(--display);letter-spacing:.06em;margin-top:.6em;display:inline-block}
+.op-info{align-self:end;display:grid;gap:26px;padding-bottom:4px}
+.meta{display:grid;grid-template-columns:auto 1fr;gap:4px 22px;margin:0;font-size:15px}
+.meta dt{color:var(--mute)}
+.meta dd{margin:0;color:var(--ink)}
+.desc{font-size:16px;line-height:1.6;display:grid;gap:12px;max-width:62ch}
+.desc .more{display:grid;gap:12px;overflow:hidden;transition:height .5s cubic-bezier(.3,.7,.1,1)}
+.desc .more[hidden]{display:none}
+.more-btn{justify-self:start;font-size:15px;color:var(--ci);border-bottom:1px solid currentColor;padding-bottom:1px}
+.op-hero{margin:0;align-self:start;position:relative}
+.op-hero .clip{overflow:hidden;clip-path:inset(var(--ins,6%) var(--ins,6%) var(--ins,6%) var(--ins,6%));will-change:clip-path}
+.op-hero img{width:100%;transform:scale(var(--sc,1.08));transform-origin:50% 40%;will-change:transform}
+.op-hero button{position:absolute;inset:0;width:100%;cursor:zoom-in}
+
+/* ---------- planche (horizontal pan through the Sotto Spina sheet) ---------- */
+.planche{position:relative}
+.planche-stick{position:sticky;top:var(--top);height:calc(100svh - var(--top));display:grid;grid-template-rows:1fr auto;overflow:hidden}
+.planche-view{position:relative;overflow:hidden;padding:clamp(10px,2vh,24px) 0}
+.planche-track{display:flex;height:100%;width:max-content;will-change:transform;padding-left:var(--gut)}
+.planche-track img{height:100%;width:auto;max-width:none;cursor:zoom-in}
+.planche-bar{display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;padding:12px var(--gut) 18px;border-top:1px solid var(--hair)}
+.chapters{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;padding-top:12px}
+.chapters .tick{position:absolute;top:-3px;width:2px;height:8px;background:var(--band)}
+.chapters .rule{position:absolute;left:0;right:0;top:0;height:2px;background:var(--hair)}
+.chapters .fill{position:absolute;left:0;top:0;height:2px;width:100%;background:var(--c);transform-origin:left;transform:scaleX(var(--p,0))}
+.chapters button{font-size:14px;line-height:1.25;text-align:left;color:var(--mute);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:color .3s;padding-left:10px;border-left:1px solid var(--band)}
+.chapters button[aria-current="true"]{color:var(--c)}
+.chapters button b{font:600 15px/1 var(--display);margin-right:6px;letter-spacing:.03em}
+.full-btn{font-size:14px;color:var(--ink);border:1px solid var(--ink);padding:8px 14px;white-space:nowrap}
+.full-btn:hover{background:var(--ink);color:#fff}
+
+/* ---------- stacked sheets ---------- */
+.sheets{padding:0 var(--gut) clamp(60px,8vw,120px)}
+.sheet{position:sticky;top:calc(var(--top) + 12px);margin:0 auto clamp(40px,9vh,110px);width:min(100%,calc((100svh - var(--top) - 96px) * 1.414));background:#fff}
+.sheet-in{transform-origin:50% 0;will-change:transform;transition:none;box-shadow:0 0 0 1px var(--hair)}
+.sheet-in img{width:100%;cursor:zoom-in}
+.sheet figcaption{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:10px 2px 0;font-size:14.5px;color:var(--mute);background:#fff}
+.sheet figcaption .cap b{font:600 16px/1 var(--display);color:var(--ci);margin-right:8px;letter-spacing:.03em}
+.sheet .note{margin-top:2px}
+.note summary{list-style:none;cursor:pointer;font-size:14.5px;color:var(--ci);display:inline-block;border-bottom:1px solid currentColor}
+.note summary::-webkit-details-marker{display:none}
+.note[open] summary{margin-bottom:12px}
+.note .note-body{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px 34px;padding:4px 2px 18px;font-size:15.5px;color:var(--text);max-width:1100px}
+.note h4{margin:0 0 4px;font:600 17px/1 var(--display);color:var(--ink);letter-spacing:.03em}
+
+/* ---------- closing (back cover) ---------- */
+.closing{position:relative;min-height:min(86svh,820px);display:grid;place-items:center;padding:clamp(80px,10vw,140px) var(--gut);scroll-margin-top:var(--top);overflow:hidden}
+.closing .ln.v-left{left:clamp(14px,3vw,48px);top:12%;height:30%;width:clamp(4px,.55vw,7px)}
+.closing .ln.h-top{left:0;width:42%;top:9%;height:1.5px;transform-origin:left}
+.closing .ln.v-thin{left:clamp(10px,2.4vw,38px);top:0;bottom:0;width:1px;background:var(--hair)}
+.sign{text-align:center;display:grid;gap:6px;justify-items:center}
+.sign::before{content:"";width:220px;height:2px;background:var(--band);margin-bottom:14px}
+.sign h2{font:700 clamp(30px,3.6vw,52px)/1 var(--display);color:var(--red)}
+.sign .sw{font:500 clamp(17px,1.6vw,22px)/1 var(--display);color:var(--red);letter-spacing:.03em}
+.sign ul{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:6px;justify-items:center;font-size:16px}
+.copy{font-size:13.5px;color:var(--mute);border-bottom:1px solid var(--band);margin-left:10px}
+.copy[data-done]{color:var(--red);border-color:var(--red)}
+footer{padding:22px var(--gut);font-size:13px;color:var(--mute);display:flex;justify-content:space-between;border-top:1px solid var(--hair)}
+
+/* ---------- lightbox ---------- */
+.lb{position:fixed;inset:0;z-index:60;background:#fff;display:grid;grid-template-rows:1fr auto}
+.lb[hidden]{display:none}
+.lb-stage{position:relative;overflow:hidden;touch-action:none;cursor:grab;background:#f4f4f4}
+.lb-stage.drag{cursor:grabbing}
+.lb-img{position:absolute;left:0;top:0;max-width:none;transform-origin:0 0;user-select:none;-webkit-user-drag:none;box-shadow:0 0 0 1px var(--hair)}
+.lb-ui{display:flex;align-items:center;gap:8px;padding:10px var(--gut);border-top:1px solid var(--hair);background:#fff}
+.lb-cap{flex:1;font-size:14.5px;color:var(--mute);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb-cap b{font:600 16px/1 var(--display);color:var(--ink);margin-right:8px;letter-spacing:.03em}
+.lb-ui button{min-width:40px;height:38px;padding:0 12px;border:1px solid var(--hair);font-size:15px}
+.lb-ui button:hover{border-color:var(--ink)}
+.lb-res{font-size:13px;color:var(--mute);white-space:nowrap}
+@media (max-width:640px){.lb-res{display:none}}
+.lb-ui .zoom-val{width:52px;text-align:center;font-size:13px;color:var(--mute);font-variant-numeric:tabular-nums}
+
+/* ---------- smaller screens ---------- */
+@media (max-width:900px){
+  .cover{min-height:auto;padding:calc(var(--top) + 28px) 0 12px}
+  .contents .band-title{justify-self:start}
+  .about{grid-template-columns:1fr;padding:56px var(--gut) 20px;row-gap:44px}
+  .about-band{grid-row:auto;background:none;border-bottom:3px solid var(--band)}
+  .about-band .band-title{position:static;writing-mode:horizontal-tb;transform:none;font-size:56px;margin:0}
+  .who img{max-width:260px}
+  .cv-low{grid-column:auto;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:0}
+  .contents{grid-template-columns:1fr;padding:60px var(--gut)}
+  .contents-band{background:none;justify-items:start;border-bottom:3px solid var(--band);margin-bottom:18px}
+  .contents .band-title{writing-mode:horizontal-tb;transform:none;font-size:56px;margin:0}
+  .strips{flex-direction:column;height:auto}
+  .strip{height:22svh;min-height:130px;flex:none}
+  .strip .nm{opacity:1;transform:none;bottom:auto;top:18px;left:auto;right:12px;text-align:right}
+  .opener{grid-template-columns:1fr;row-gap:22px;padding-top:70px}
+  .op-side-in{position:static;height:auto;flex-direction:row;align-items:end;justify-content:flex-start;gap:16px}
+  .op-title{writing-mode:horizontal-tb;transform:none;white-space:normal}
+  .op-title small{display:block;margin-top:6px}
+  .op-info{align-self:start}
+  .rail{display:none}
+  .planche-stick{position:static;height:auto}
+  .planche-view{height:62svh;overflow-x:auto;overscroll-behavior-x:contain}
+  .planche-track{transform:none!important;padding-right:var(--gut)}
+  .chapters{grid-template-columns:1fr 1fr;gap:8px 16px}
+  .chapters .tick{display:none}
+  .planche-bar{grid-template-columns:1fr}
+  .sheet{position:relative;top:auto;width:100%}
+  .sheet figcaption{flex-direction:column;gap:6px}
+  .cv-low .pi li{grid-template-columns:76px 1fr}
+}
+@media (max-width:520px){
+  .top nav a:nth-child(1){display:none}
+  .cv-low{grid-template-columns:1fr}
+  .cover-sub{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .strip,.strip img,.desc .more{transition:none}
+}
+</style>
+</head>
+<body>
+
+<header class="top" id="top-bar">
+  <a class="brand" href="#top">AYA ABDEL NOUR</a>
+  <nav aria-label="Sections">
+    <a href="#projects">Projects</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<nav class="rail" aria-label="Projects">
+  <a href="#sotto-spina" style="--c:var(--p1)">01</a>
+  <a href="#co-working-space" style="--c:var(--p2)">02</a>
+  <a href="#zen-haven" style="--c:var(--p3-ink)">03</a>
+  <a href="#baynetna" style="--c:var(--p4)">04</a>
+</nav>
+
+<main>
+<!-- COVER -->
+<section class="cover" id="top" aria-label="Cover">
+  <div class="sheet-a3" id="cover">
+    <span class="ln v-top"></span>
+    <span class="ln v-long" id="cover-vline"></span>
+    <span class="ln h-red"></span>
+    <span class="ln h-grey"></span>
+    <p class="cover-name">AYA ABDEL NOUR</p>
+    <h1 class="cover-title" id="cover-title" aria-label="Portfolio"><span><i style="--i:0">P</i></span><span><i style="--i:1">O</i></span><span><i style="--i:2">R</i></span><span><i style="--i:3">T</i></span><span><i style="--i:4">F</i></span><span><i style="--i:5">O</i></span><span><i style="--i:6">L</i></span><span><i style="--i:7">I</i></span><span><i style="--i:8">O</i></span></h1>
+    <p class="cover-sub">Selected works 2023-26</p>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about" aria-labelledby="about-h">
+  <div class="about-band"><h2 class="band-title" id="about-h">ABOUT ME</h2></div>
+
+  <div class="who">
+    <img src="assets/portrait.webp" width="900" height="1057" alt="Portrait of Aya Abdel Nour" loading="lazy">
+    <h2>AYA ABDEL NOUR</h2>
+    <p class="tag">A dynamic and imaginative architecture student with a passion for pushing the boundaries of creativity in the world of architecture.</p>
+  </div>
+
+  <div class="cv-col">
+    <div class="cv">
+      <h3>EDUCATION</h3>
+      <ul>
+        <li class="ent"><b>Master’s in Architecture Construction City</b><span class="when">[Sept 2025 – present]</span><p>Politecnico di Torino (POLITO)</p></li>
+        <li class="ent"><b>Bachelor in Architecture</b><span class="when">[Sept 2021 – June 2025]</span><p>University of Balamand, Académie Libanaise des Beaux-Arts (ALBA)</p><p>Grade 14.26/20</p></li>
+        <li class="ent"><b>Lebanese Baccalaureate</b><span class="when">[Sept 2005 – June 2021]</span><p>Collège des Sœurs des Saints-Cœurs, Kfarhbab</p><p>Grade 16.33/20</p></li>
+      </ul>
+    </div>
+    <div class="cv">
+      <h3>EXPERIENCE</h3>
+      <ul>
+        <li class="ent"><b>Internship Program <small>- Dar Al-Handasah</small></b>
+          <ul class="bul">
+            <li>Conducted research on materials and construction methods to support design decisions.</li>
+            <li>Participated in project meetings and contributed to the development of design solutions.</li>
+            <li>Produced multiple architectural drawings with comprehensive detailing, plans and specifications.</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cv-col">
+    <div class="cv">
+      <h3>ACHIEVEMENTS</h3>
+      <ul>
+        <li class="ent"><b>Summer School: AI-Enhanced Architecture, POLITO × MVRDV</b><span class="when">[July 2026]</span>
+          <ul class="bul"><li>Developed a proposal exploring the future of light and lighting, which was awarded 2nd Prize in the competition organized in collaboration with Zumtobel Group.</li></ul></li>
+        <li class="ent"><b>Zumtobel × ALBA Design Competition</b><span class="when">[Feb 2025]</span>
+          <ul class="bul"><li>Developed a proposal exploring the future of light and lighting, which was awarded 2nd Prize in the competition organized in collaboration with Zumtobel Group.</li></ul></li>
+        <li class="ent"><b>Scout <small>- Guides du Liban</small></b><span class="when">[2009 – 2023]</span>
+          <ul class="bul"><li>Developed strong leadership and teamwork skills through various activities and responsibilities.</li></ul></li>
+        <li class="ent"><b>Volunteering <small>- Te3li2a Organization</small></b><span class="when">[Aug 2020]</span>
+          <ul class="bul"><li>Helped provide food and clothes to people in need after the Port of Beirut explosion.</li></ul></li>
+        <li class="ent"><b>Leadership Certificate <small>- Alison Online Courses</small></b><span class="when">[Sept 2020]</span>
+          <ul class="bul"><li>Developed strong leadership and teamwork skills through various activities and responsibilities.</li></ul></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cv-low">
+    <div class="cv">
+      <h3>PERSONAL INFORMATION</h3>
+      <ul class="pi">
+        <li><span>Nationality</span>Lebanese</li>
+        <li><span>Email</span><a href="mailto:ayaabdelnour8@gmail.com">ayaabdelnour8@gmail.com</a></li>
+        <li><span>Address</span>Via Germanasca 15, Turin</li>
+        <li><span>Phone</span>+39 34444141107</li>
+      </ul>
+    </div>
+    <div class="cv">
+      <h3>SOFTWARE</h3>
+      <ul><li>AutoCAD</li><li>Adobe Illustrator</li><li>Adobe Photoshop</li><li>Rhinoceros 3D</li><li>Lumion</li><li>Microsoft Office (Word, Excel, PowerPoint)</li></ul>
+    </div>
+    <div class="cv">
+      <h3>SOFT SKILLS</h3>
+      <ul><li>Creativity</li><li>Time management</li><li>Patience</li><li>Determination</li><li>Aesthetics</li><li>Problem solving</li></ul>
+    </div>
+    <div class="cv">
+      <h3>LANGUAGES</h3>
+      <ul><li>Arabic <span>(native)</span></li><li>French <span>(native)</span></li><li>English</li></ul>
+    </div>
+    <div class="cv">
+      <h3>CERTIFICATIONS</h3>
+      <ul class="cert"><li><b>DELF (73.50/100)</b><span class="when" style="display:block;font-size:12.5px;color:#a3a3a3">[Dec 2020]</span></li><li><b>TOEFL (87/120)</b><span class="when" style="display:block;font-size:12.5px;color:#a3a3a3">[Oct 2024]</span></li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- CONTENTS -->
+<section class="contents" id="projects" aria-labelledby="content-h">
+  <div class="contents-band"><h2 class="band-title" id="content-h">CONTENT</h2></div>
+  <div class="strips">
+    <a class="strip" href="#sotto-spina"><img src="assets/hero-4.webp" width="1932" height="2037" alt="" loading="lazy"><span class="n">01</span><span class="nm">SOTTO SPINA</span><span class="cat">URBAN</span></a>
+    <a class="strip" href="#co-working-space"><img src="assets/hero-8.webp" width="1264" height="1215" alt="" loading="lazy"><span class="n">02</span><span class="nm">CO-WORKING SPACE</span><span class="cat">ARCHITECTURE DESIGN</span></a>
+    <a class="strip" href="#zen-haven"><img src="assets/hero-11.webp" width="1251" height="1318" alt="" loading="lazy"><span class="n">03</span><span class="nm">ZEN HAVEN</span><span class="cat">INTERIOR DESIGN</span></a>
+    <a class="strip" href="#baynetna"><img src="assets/hero-14.webp" width="1252" height="1325" alt="" loading="lazy"><span class="n">04</span><span class="nm">BAYNETNA</span><span class="cat">URBAN DESIGN</span></a>
+  </div>
+</section>
+
+<!-- 01 SOTTO SPINA -->
+<section class="project" id="sotto-spina" style="--c:var(--p1)" data-rail="0" aria-labelledby="p1-h">
+  <div class="opener">
+    <div class="op-side"><div class="op-side-in"><span class="op-num">01</span><h2 class="op-title" id="p1-h">SOTTO SPINA</h2></div></div>
+    <div class="op-info">
+      <dl class="meta"><dt>Site</dt><dd>Via Stradella, Torino</dd><dt>Year</dt><dd>2026</dd><dt>Type</dt><dd>Group Project</dd></dl>
+      <div class="desc">
+        <p>The project investigates the city as a system of interconnected layers, shaped by different levels, functions and relationships that define its urban structure. Located in Via Stradella, Turin, the intervention seeks to reconnect these layers while revitalizing an area that had become largely inactive and disconnected from its surroundings.</p>
+        <div class="more" hidden>
+          <p>Through the reorganization of spaces and the articulation of different levels, the project introduces new functions and opportunities for interaction, transforming a neglected urban space into a lively environment.</p>
+          <p>Sotto Spina becomes a connecting element that weaves together architecture, movement and urban life, restoring continuity and giving the area a renewed sense of identity.</p>
+        </div>
+        <button class="more-btn" aria-expanded="false">Read full description</button>
+      </div>
+    </div>
+    <figure class="op-hero"><div class="clip"><img src="assets/hero-4.webp" width="1932" height="2037" alt="Sotto Spina, perspective of the covered walkway" loading="lazy"></div><button class="zoomable" data-group="p1" data-src="assets/hero-4.webp" data-cap="SOTTO SPINA|Perspective" aria-label="View image full size"></button></figure>
+  </div>
+
+  <div class="planche" id="planche">
+    <div class="planche-stick">
+      <div class="planche-view" id="planche-view">
+        <div class="planche-track" id="planche-track">
+          <img src="assets/spina-1.webp" width="2546" height="1800" alt="Sotto Spina sheet, part 1: Via Stradella Reimagined, postcard collection, site analysis, The Spina Reale Playbook, urban strategies, Turin transit analysis, design actions" data-group="p1" data-cap="SOTTO SPINA|Sheet, part 1 of 3" class="zoomable">
+          <img src="assets/spina-2.webp" width="2546" height="1800" alt="Sotto Spina sheet, part 2: New Vision For The Spina, spatial framework, network of interventions" data-group="p1" data-cap="SOTTO SPINA|Sheet, part 2 of 3" class="zoomable">
+          <img src="assets/spina-3.webp" width="2487" height="1800" alt="Sotto Spina sheet, part 3: circulation network, vertical journey" data-group="p1" data-cap="SOTTO SPINA|Sheet, part 3 of 3" class="zoomable">
+        </div>
+      </div>
+      <div class="planche-bar">
+        <div class="chapters" id="chapters">
+          <span class="rule"></span><span class="fill" id="planche-fill"></span>
+          <button data-at="0"><b>01</b>Via Stradella Reimagined</button>
+          <button data-at="362.5"><b>02</b>The Spina Reale Playbook</button>
+          <button data-at="1184.8"><b>03</b>New Vision For The Spina</button>
+          <button data-at="2864">Circulation Network: Vertical Journey</button>
+        </div>
+        <button class="full-btn" id="planche-full">View sheet full size</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 CO-WORKING SPACE -->
+<section class="project" id="co-working-space" style="--c:var(--p2)" data-rail="1" aria-labelledby="p2-h">
+  <div class="opener">
+    <div class="op-side"><div class="op-side-in"><span class="op-num">02</span><h2 class="op-title" id="p2-h">CO-WORKING SPACE</h2></div></div>
+    <div class="op-info">
+      <dl class="meta"><dt>Site</dt><dd>Beirut, Lebanon</dd><dt>Year</dt><dd>2023</dd><dt>Type</dt><dd>Individual Project</dd></dl>
+      <div class="desc">
+        <p>The emergence of new workspaces in Badaro has become a recurring habit, which is why it is imperative that our designs not only meet current working needs but also pave the way for future possibilities.</p>
+        <div class="more" hidden>
+          <p>In designing this project, my vision was to create a space that not only facilitates collaboration and productivity, but also evolves with the dynamic demands of its users. The module which is a rectangular structure with a central void is designed for versatility and expansion.</p>
+          <p>In today's fast-paced world, as businesses evolve, so do the spatial needs of employees. This modular design therefore allows us to respond to these requests with great flexibility.</p>
+          <p>The voids inside create a sense of community which forms the basis of a coworking environment.</p>
+          <p>By choosing modularity, we are not only building a space for today, but we are also laying the foundation for the workplaces of tomorrow.</p>
+        </div>
+        <button class="more-btn" aria-expanded="false">Read full description</button>
+      </div>
+    </div>
+    <figure class="op-hero"><div class="clip"><img src="assets/hero-8.webp" width="1264" height="1215" alt="Co-working space, interior render of the timber modules" loading="lazy"></div><button class="zoomable" data-group="p2" data-src="assets/hero-8.webp" data-cap="CO-WORKING SPACE|Render" aria-label="View image full size"></button></figure>
+  </div>
+  <div class="sheets">
+    <figure class="sheet"><div class="sheet-in"><img src="assets/board-9.webp" width="3000" height="2122" alt="Co-working space sheet: project development diagrams, modules forming pillars, beams, slabs and project, floor plans 4 and 5" loading="lazy" class="zoomable" data-group="p2" data-cap="CO-WORKING SPACE|Project development, diagrams, floor plans 4 and 5"></div>
+      <figcaption><span class="cap"><b>02</b>Project development, diagrams, floor plans 4 and 5</span><span>Select the sheet to view it full size</span></figcaption></figure>
+    <figure class="sheet"><div class="sheet-in"><img src="assets/board-10.webp" width="3000" height="2122" alt="Co-working space sheet: render street view, render close-up side view, axonometric section" loading="lazy" class="zoomable" data-group="p2" data-cap="CO-WORKING SPACE|Render street view, render close-up side view, axonometric section"></div>
+      <figcaption><span class="cap"><b>02</b>Render street view, render close-up side view, axonometric section</span></figcaption></figure>
+  </div>
+</section>
+
+<!-- 03 ZEN HAVEN -->
+<section class="project" id="zen-haven" style="--c:var(--p3);--ci:var(--p3-ink)" data-rail="2" aria-labelledby="p3-h">
+  <div class="opener">
+    <div class="op-side"><div class="op-side-in"><span class="op-num">03</span><h2 class="op-title" id="p3-h">ZEN HAVEN</h2></div></div>
+    <div class="op-info">
+      <dl class="meta"><dt>Site</dt><dd>Beirut, Lebanon</dd><dt>Year</dt><dd>2024</dd><dt>Type</dt><dd>Individual Project</dd></dl>
+      <div class="desc">
+        <p>My interior project concerns the design of a yoga instructor's house. I paid particular attention to the different levels in order to create a feeling of proximity to the ground, in resonance with the principles of yoga, in particular the connection to the earth.</p>
+        <div class="more" hidden>
+          <p>All the furniture is low, inspired by Japanese style, to promote this intimacy with the space. I opted for a natural and neutral color palette, which embodies serenity and zen.</p>
+          <p>Organic materials such as rock, gravel and wood were incorporated to reinforce this natural look.</p>
+          <p>In addition, almost all of the furniture has been custom designed, to specifically meet the needs and spirit of the place.</p>
+        </div>
+        <button class="more-btn" aria-expanded="false">Read full description</button>
+      </div>
+    </div>
+    <figure class="op-hero"><div class="clip"><img src="assets/hero-11.webp" width="1251" height="1318" alt="Zen Haven, interior render with low furniture" loading="lazy"></div><button class="zoomable" data-group="p3" data-src="assets/hero-11.webp" data-cap="ZEN HAVEN|Render" aria-label="View image full size"></button></figure>
+  </div>
+  <div class="sheets">
+    <figure class="sheet"><div class="sheet-in"><img src="assets/board-12.webp" width="3000" height="2122" alt="Zen Haven sheet: moodboard, levels and functions, materials and colors, structure elements" loading="lazy" class="zoomable" data-group="p3" data-cap="ZEN HAVEN|Moodboard, levels and functions, materials and colors, structure elements"></div>
+      <figcaption><span class="cap"><b>03</b>Moodboard, levels and functions, materials and colors, structure elements</span></figcaption>
+      <details class="note"><summary>Read the text on this sheet</summary>
+        <div class="note-body"><p>This project required taking a previous design and rethinking it through a new spatial and architectural approach. The main challenge was to work within an existing outer form while transforming its interior into a completely different experience. I started by emptying the volume and carving out different levels, openings, and voids, allowing the spaces to flow into one another rather than remain isolated. The arrangement of levels creates a continuous spatial journey, with each space offering a different experience while remaining visually connected to the rest of the project.</p></div>
+      </details></figure>
+    <figure class="sheet"><div class="sheet-in"><img src="assets/board-13.webp" width="3000" height="2122" alt="Zen Haven sheet: sections 1 to 3, floor plan, render views 1 to 6" loading="lazy" class="zoomable" data-group="p3" data-cap="ZEN HAVEN|Sections, floor plan, render views"></div>
+      <figcaption><span class="cap"><b>03</b>Sections, floor plan, render views</span></figcaption></figure>
+  </div>
+</section>
+
+<!-- 04 BAYNETNA -->
+<section class="project" id="baynetna" style="--c:var(--p4);--ci:var(--p4-ink)" data-rail="3" aria-labelledby="p4-h">
+  <div class="opener">
+    <div class="op-side"><div class="op-side-in"><span class="op-num">04</span><h2 class="op-title" id="p4-h">BAYNETNA <small>- A SUSPENDED SPACE FOR DIALOGUE</small></h2></div></div>
+    <div class="op-info">
+      <dl class="meta"><dt>Site</dt><dd>Beirut, Lebanon</dd><dt>Year</dt><dd>2025</dd><dt>Type</dt><dd>Group Project</dd></dl>
+      <div class="desc">
+        <p>Amidst the vibrant energy and chaos of Beirut, this urban parklet offers a moment of pause. Built entirely from modular scaffolding materials already present in the neighborhood, the intervention easily scales and transforms to meet evolving community needs.</p>
+        <div class="more" hidden>
+          <p>By shifting streetscapes from mere thoroughfares into shared living spaces, the project seeks to reconcile the city with its inhabitants through social interaction and flexible design.</p>
+        </div>
+        <button class="more-btn" aria-expanded="false">Read full description</button>
+      </div>
+    </div>
+    <figure class="op-hero"><div class="clip"><img src="assets/hero-14.webp" width="1252" height="1325" alt="Baynetna, view over Beirut" loading="lazy"></div><button class="zoomable" data-group="p4" data-src="assets/hero-14.webp" data-cap="BAYNETNA|View over Beirut" aria-label="View image full size"></button></figure>
+  </div>
+  <div class="sheets">
+    <figure class="sheet"><div class="sheet-in"><img src="assets/board-15.webp" width="3000" height="2122" alt="Baynetna sheet: the site between Mar Mikhael and Gemmayzeh, intention, references" loading="lazy" class="zoomable" data-group="p4" data-cap="BAYNETNA|The site, intention, references"></div>
+      <figcaption><span class="cap"><b>04</b>The site, intention, references</span></figcaption>
+      <details class="note"><summary>Read the text on this sheet</summary>
+        <div class="note-body">
+          <div><h4>THE SITE</h4><p>This location, situated between Mar Mikhael and Gemmayzeh, two emblematic neighborhoods, brings together several realities of Beirut: the memory of the explosion, the chaos of constant traffic, and the damaged facades, but also the daily passage of hundreds of people. It is a point of tension, but also a meeting point for different social classes, histories, and life paths.</p></div>
+          <div><h4>INTENTION</h4><p>A simple and modular space, built using scaffolding already present in the neighborhood, that transforms a street corner into a gathering place. Here, everyone can find their place, whether sitting alone for a quiet break or conversing with a neighbor or passerby. This parklet thus becomes a hub for quiet or lively dialogue, a space open to diverse encounters. The modularity of the scaffolding allows the space to easily adapt to changing needs, whether in size, shape, or function, offering essential flexibility in a constantly evolving urban environment.</p></div>
+          <div><h4>REFERENCES</h4><p>Beirut is a city in a permanent state of instability and transformation, wars, economic crises, disasters, unfinished rehabilitations... Scaffolding has become an almost permanent urban element. It symbolizes a transitory state, but in Beirut, this transition seems to last. What if we embraced this permanence and turned it into an opportunity for an alternative public space?</p></div>
+        </div>
+      </details></figure>
+    <figure class="sheet"><div class="sheet-in"><img src="assets/board-16.webp" width="3000" height="2122" alt="Baynetna sheet: modular elements, assembling the modules in top, side, front and perspective views, sidewalk view, side view" loading="lazy" class="zoomable" data-group="p4" data-cap="BAYNETNA|Modular elements, assembling the modules, sidewalk view, side view"></div>
+      <figcaption><span class="cap"><b>04</b>Modular elements, assembling the modules, sidewalk view, side view</span></figcaption></figure>
+  </div>
+</section>
+
+<!-- CLOSING (back cover) -->
+<section class="closing" id="contact" aria-labelledby="contact-h">
+  <span class="ln v-thin"></span><span class="ln h-top"></span><span class="ln v-left"></span>
+  <div class="sign">
+    <h2 id="contact-h">AYA ABDEL NOUR</h2>
+    <p class="sw">SELECTED WORKS 2023-26</p>
+    <ul>
+      <li><a href="mailto:ayaabdelnour8@gmail.com">ayaabdelnour8@gmail.com</a><button class="copy" id="copy-email" type="button">Copy email</button></li>
+      <li>+39 34444141107</li>
+    </ul>
+  </div>
+</section>
+</main>
+<footer><span>Aya Abdel Nour</span><span>Selected works 2023-26</span></footer>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Full size view" hidden>
+  <div class="lb-stage" id="lb-stage"><img class="lb-img" id="lb-img" alt=""></div>
+  <div class="lb-ui">
+    <span class="lb-cap" id="lb-cap"></span>
+    <span id="lb-res-slot"></span>
+    <button data-act="prev" aria-label="Previous image">Prev</button>
+    <button data-act="next" aria-label="Next image">Next</button>
+    <button data-act="out" aria-label="Zoom out">−</button>
+    <span class="zoom-val" id="lb-zoom">100%</span>
+    <button data-act="in" aria-label="Zoom in">+</button>
+    <button data-act="fit">Fit</button>
+    <button data-act="close">Close</button>
+  </div>
+</div>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const narrow = () => innerWidth <= 900;
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const ease = t => 1 - Math.pow(1 - t, 3);
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const topH = () => $('#top-bar').offsetHeight;
+
+  /* ---------- expandable descriptions ---------- */
+  $$('.more-btn').forEach(btn => {
+    const more = btn.previousElementSibling;
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      if (!open) {
+        more.hidden = false;
+        if (!reduce) { const h = more.scrollHeight; more.style.height = '0px'; requestAnimationFrame(() => { more.style.height = h + 'px'; }); more.addEventListener('transitionend', () => { more.style.height = ''; }, { once: true }); }
+        btn.setAttribute('aria-expanded', 'true'); btn.textContent = 'Show less';
+      } else {
+        if (!reduce) { more.style.height = more.scrollHeight + 'px'; requestAnimationFrame(() => { more.style.height = '0px'; }); more.addEventListener('transitionend', () => { more.hidden = true; more.style.height = ''; }, { once: true }); }
+        else more.hidden = true;
+        btn.setAttribute('aria-expanded', 'false'); btn.textContent = 'Read full description';
+      }
+    });
+  });
+
+  /* ---------- copy email ---------- */
+  const copy = $('#copy-email');
+  copy.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText('ayaabdelnour8@gmail.com'); copy.textContent = 'Copied'; copy.dataset.done = ''; }
+    catch (e) { copy.textContent = 'Select the address to copy it'; }
+    setTimeout(() => { copy.textContent = 'Copy email'; delete copy.dataset.done; }, 2200);
+  });
+
+  /* ---------- planche geometry ---------- */
+  const planche = $('#planche'), track = $('#planche-track'), view = $('#planche-view');
+  const tiles = $$('img', track);
+  const BOARD_W = 1190.55 * 2 + 1163;          // sheet width in PDF points, used by the chapter markers
+  let trackW = 0, maxShift = 0;
+  function layoutPlanche() {
+    const h = view.clientHeight - parseFloat(getComputedStyle(view).paddingTop) * 2;
+    trackW = tiles.reduce((s, im) => s + h * im.width / im.height, 0) + parseFloat(getComputedStyle(track).paddingLeft) * 2;
+    if (narrow() || reduce) { planche.style.height = ''; maxShift = 0; return; }
+    maxShift = Math.max(0, trackW - innerWidth);
+    planche.style.height = (maxShift + innerHeight) + 'px';
+  }
+  const chapterBtns = $$('#chapters button');
+  chapterBtns.forEach(b => { const t = document.createElement('span'); t.className = 'tick'; t.style.left = (parseFloat(b.dataset.at) / BOARD_W * 100) + '%'; $('#chapters').append(t); });
+  function placeChapters() {}
+  chapterBtns.forEach(b => b.addEventListener('click', () => {
+    const f = parseFloat(b.dataset.at) / BOARD_W;
+    if (narrow() || reduce) { view.scrollTo({ left: Math.max(0, f * view.scrollWidth - 16), behavior: reduce ? 'auto' : 'smooth' }); return; }
+    const pageTop = planche.getBoundingClientRect().top + scrollY - topH();
+    const shift = Math.min(maxShift, f * (trackW - parseFloat(getComputedStyle(track).paddingLeft)));
+    scrollTo({ top: pageTop + shift, behavior: reduce ? 'auto' : 'smooth' });
+  }));
+  $('#planche-full').addEventListener('click', () => openLB(tiles[0]));
+
+  /* ---------- scroll-driven scenes ---------- */
+  const topbar = $('#top-bar'), rail = $('.rail'), railLinks = $$('.rail a');
+  const coverTitle = $('#cover-title'), cover = $('#cover');
+  const heroes = $$('.op-hero');
+  const sheetGroups = $$('.sheets').map(g => $$('.sheet', g));
+  const projects = $$('.project');
+  let ticking = false;
+
+  function frame() {
+    ticking = false;
+    const vh = innerHeight, th = topH();
+    topbar.classList.toggle('scrolled', scrollY > 10);
+
+    // cover: the title drifts left as the sheet leaves
+    if (!reduce) {
+      const r = cover.getBoundingClientRect();
+      const p = clamp(-r.top / r.height);
+      coverTitle.style.transform = `translateX(${-p * 18}%)`;
+    }
+
+    // project heroes open from an inset frame and settle in scale
+    heroes.forEach(f => {
+      const r = f.getBoundingClientRect();
+      if (r.bottom < -50 || r.top > vh + 50) return;
+      const p = ease(clamp((vh - r.top) / (vh * .85)));
+      f.style.setProperty('--ins', reduce ? '0%' : ((1 - p) * 9).toFixed(2) + '%');
+      f.style.setProperty('--sc', reduce ? 1 : (1.1 - .1 * p).toFixed(4));
+    });
+
+    // planche: vertical scroll pans the sheet sideways
+    if (!narrow() && !reduce) {
+      const r = planche.getBoundingClientRect();
+      const p = clamp((th - r.top) / Math.max(1, maxShift));
+      track.style.transform = `translate3d(${(-p * maxShift).toFixed(1)}px,0,0)`;
+      $('#planche-fill').style.setProperty('--p', p.toFixed(4));
+      const atPt = p * BOARD_W * (maxShift / Math.max(1, trackW - parseFloat(getComputedStyle(track).paddingLeft))) + 200;
+      let cur = 0; chapterBtns.forEach((b, i) => { if (atPt >= parseFloat(b.dataset.at)) cur = i; });
+      chapterBtns.forEach((b, i) => b.setAttribute('aria-current', i === cur ? 'true' : 'false'));
+    }
+
+    // stacked sheets: a sheet steps back as the next one slides over it
+    if (!narrow() && !reduce) sheetGroups.forEach(group => group.forEach((s, i) => {
+      const inner = s.firstElementChild, next = group[i + 1];
+      if (!next) { inner.style.transform = ''; inner.style.opacity = ''; return; }
+      const nr = next.getBoundingClientRect();
+      const q = clamp(1 - (nr.top - th) / (vh - th));
+      inner.style.transform = `scale(${(1 - .07 * q).toFixed(4)})`;
+      inner.style.opacity = (1 - .55 * q).toFixed(3);
+    }));
+
+    // project rail
+    let active = -1;
+    projects.forEach((sec, i) => { const r = sec.getBoundingClientRect(); if (r.top < vh * .5 && r.bottom > vh * .5) active = i; });
+    rail.classList.toggle('on', active >= 0);
+    railLinks.forEach((a, i) => a.setAttribute('aria-current', i === active ? 'true' : 'false'));
+  }
+  const request = () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } };
+  addEventListener('scroll', request, { passive: true });
+  function fitCover() {
+    coverTitle.style.fontSize = '100px';
+    const w = coverTitle.scrollWidth;
+    coverTitle.style.fontSize = (100 * cover.clientWidth * .392 / w).toFixed(2) + 'px';
+  }
+  function relayout() { fitCover(); layoutPlanche(); placeChapters(); frame(); }
+  document.fonts && document.fonts.ready.then(relayout);
+  addEventListener('resize', relayout);
+  tiles.forEach(im => im.complete ? 0 : im.addEventListener('load', relayout, { once: true }));
+  relayout();
+  addEventListener('load', relayout);
+
+  /* ---------- lightbox with zoom and pan ---------- */
+  const lb = $('#lb'), stage = $('#lb-stage'), lbImg = $('#lb-img'), lbCap = $('#lb-cap'), lbZoom = $('#lb-zoom');
+  let list = [], idx = 0, s = 1, fit = 1, x = 0, y = 0, lastFocus = null;
+  const items = $$('.zoomable');
+  function apply() { lbImg.style.transform = `translate(${x}px,${y}px) scale(${s})`; lbZoom.textContent = Math.round(s / fit * 100) + '%'; }
+  function fitImg() {
+    const W = stage.clientWidth, H = stage.clientHeight, iw = lbImg.naturalWidth, ih = lbImg.naturalHeight;
+    if (!iw) return;
+    fit = Math.min((W - 32) / iw, (H - 32) / ih); s = fit;
+    x = (W - iw * s) / 2; y = (H - ih * s) / 2; apply();
+  }
+  function zoomAt(f, cx, cy) {
+    const ns = clamp(s * f, fit, Math.max(fit * 6, 1.5));
+    x = cx - (cx - x) * ns / s; y = cy - (cy - y) * ns / s; s = ns; apply();
+  }
+  function show(i) {
+    idx = (i + list.length) % list.length;
+    const el = list[idx];
+    const src = el.dataset.src || el.getAttribute('src');
+    const [t, c] = (el.dataset.cap || '|').split('|');
+    lbCap.innerHTML = ''; const b = document.createElement('b'); b.textContent = t; lbCap.append(b, document.createTextNode(c));
+    lbImg.alt = el.getAttribute('alt') || el.getAttribute('aria-label') || '';
+    const token = ++loadToken;
+    lbRes.textContent = '';
+    lbImg.onload = () => { if (token === loadToken) { fitImg(); loadHD(src, token); } };
+    lbImg.src = src; if (lbImg.complete && lbImg.naturalWidth) { fitImg(); loadHD(src, token); }
+  }
+  // full-resolution file swaps in once downloaded, keeping the current zoom and position
+  const HD = ['spina-1','spina-2','spina-3','board-9','board-10','board-12','board-13','board-15','board-16','hero-4'];
+  let loadToken = 0;
+  const lbRes = document.createElement('span'); lbRes.className = 'lb-res';
+  function loadHD(src, token) {
+    const key = src.replace(/^.*\//, '').replace('.webp', '');
+    if (!HD.includes(key)) return;
+    const hd = new Image(); lbRes.textContent = 'Loading full resolution';
+    hd.onload = () => {
+      if (token !== loadToken || lb.hidden) return;
+      const k = lbImg.naturalWidth / hd.naturalWidth;
+      lbImg.onload = null; lbImg.src = hd.src;
+      s *= k; fit *= k; apply(); lbRes.textContent = 'Full resolution';
+    };
+    hd.src = 'assets/hd/' + key + '.webp';
+  }
+  function openLB(el) {
+    list = items.filter(e => e.dataset.group === el.dataset.group);
+    lastFocus = document.activeElement;
+    lb.hidden = false; document.body.style.overflow = 'hidden';
+    show(list.indexOf(el)); $('[data-act="close"]', lb).focus();
+  }
+  function closeLB() { lb.hidden = true; document.body.style.overflow = ''; lbImg.removeAttribute('src'); lastFocus && lastFocus.focus(); }
+  items.forEach(el => {
+    el.addEventListener('click', () => openLB(el));
+    if (el.tagName === 'IMG') { el.tabIndex = 0; el.setAttribute('role', 'button'); el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLB(el); } }); }
+  });
+  $('#lb-res-slot').replaceWith(lbRes);
+  $$('.lb-ui button').forEach(b => b.addEventListener('click', () => {
+    const W = stage.clientWidth / 2, H = stage.clientHeight / 2;
+    ({ prev: () => show(idx - 1), next: () => show(idx + 1), in: () => zoomAt(1.5, W, H), out: () => zoomAt(1 / 1.5, W, H), fit: fitImg, close: closeLB })[b.dataset.act]();
+  }));
+  stage.addEventListener('wheel', e => { e.preventDefault(); const r = stage.getBoundingClientRect(); zoomAt(Math.exp(-e.deltaY * .0018), e.clientX - r.left, e.clientY - r.top); }, { passive: false });
+  stage.addEventListener('dblclick', e => { const r = stage.getBoundingClientRect(); if (s > fit * 1.05) fitImg(); else zoomAt(2.5, e.clientX - r.left, e.clientY - r.top); });
+  const pts = new Map(); let pinch = 0;
+  stage.addEventListener('pointerdown', e => { stage.setPointerCapture(e.pointerId); pts.set(e.pointerId, { x: e.clientX, y: e.clientY }); stage.classList.add('drag'); });
+  stage.addEventListener('pointermove', e => {
+    if (!pts.has(e.pointerId)) return;
+    const prev = pts.get(e.pointerId); pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pts.size === 1) { x += e.clientX - prev.x; y += e.clientY - prev.y; apply(); }
+    else if (pts.size === 2) {
+      const [a, b] = [...pts.values()]; const d = Math.hypot(a.x - b.x, a.y - b.y);
+      const r = stage.getBoundingClientRect();
+      if (pinch) zoomAt(d / pinch, (a.x + b.x) / 2 - r.left, (a.y + b.y) / 2 - r.top);
+      pinch = d;
+    }
+  });
+  const up = e => { pts.delete(e.pointerId); if (pts.size < 2) pinch = 0; if (!pts.size) stage.classList.remove('drag'); };
+  stage.addEventListener('pointerup', up); stage.addEventListener('pointercancel', up);
+  addEventListener('keydown', e => {
+    if (lb.hidden) return;
+    if (e.key === 'Escape') closeLB();
+    else if (e.key === 'ArrowRight') show(idx + 1);
+    else if (e.key === 'ArrowLeft') show(idx - 1);
+    else if (e.key === '+' || e.key === '=') zoomAt(1.5, stage.clientWidth / 2, stage.clientHeight / 2);
+    else if (e.key === '-') zoomAt(1 / 1.5, stage.clientWidth / 2, stage.clientHeight / 2);
+    else if (e.key === 'Tab') { const f = $$('.lb-ui button', lb); const i = f.indexOf(document.activeElement); if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); } else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); } }
+  });
+  addEventListener('resize', () => { if (!lb.hidden) fitImg(); });
+})();
+</script>
+</body>
+</html>
